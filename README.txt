@@ -1,16 +1,19 @@
 
 # Build the image
-docker build -t guigo13/web-server-image:v1 .
+docker build -t simple-nginx-gcp-image:v1 .
 
 # test the image
-docker run -d -p 80:80 --name web-server-container guigo13/web-server-image:v1
+docker run -d -p 80:80 --name simple-nginx-gcp-container simple-nginx-gcp-image:v1
 curl localhost:80
 
+# Tag the image
+docker tag simple-nginx-gcp-image:v1 guigo-13/simple-nginx-gcp-image:v1
+
 # Commit the image
-docker commit web-server-container guigo13/web-server-image:v1
+docker commit simple-nginx-gcp-container guigo13/simple-nginx-gcp-image:v1
 
 # Push the image to DockerHub
-docker push guigo13/web-server-image:v1
+docker push guigo13/simple-nginx-gcp-image:v1
 
 minikube start
 
