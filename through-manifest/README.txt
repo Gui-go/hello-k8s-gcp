@@ -18,27 +18,8 @@ docker push guigo13/simple-nginx-gcp-image:v1
 # Fetch a kubeconfig to entry the cluster
 gcloud container clusters get-credentials try-gke-cluster-2 --zone us-central1-c
 
+# Apply both service and deployment through the same manifest.yaml
 kubectl apply -f manifest.yaml
-
-
-
-
-
-
-
-# Pull the image
-docker pull guigo13/simple-nginx-gcp-image:v1
-
-
-
-
-
-
-# Create a pod
-kubectl run simple-nginx-gke --image=guigo13/simple-nginx-gcp-image:v1 --port=80
-
-# Expose the port 
-kubectl expose pod simple-nginx-gcp-gcloud --type=LoadBalancer
 
 # Now there should be a service running
 kubectl get services
@@ -47,24 +28,6 @@ kubectl get services -o yaml
 # You can now curl to
 kubectl get services -o json | grep ip | cut -d ':' -f2 | cut -d '"' -f2 --output-delimiter=''
 
-# Delete everything
+# Delete everything in your way out
 kubectl delete all --all
-
-# -----------------------------------------------------------------------------------
-EXTRA
-
-minikube start
-kubectl create -f webserver.yaml
-kubectl get pods
-kubectl get pods --show-labels
-kubectl get pods -L creation_method,env
-kubectl expose pod web-server --type LoadBalancer --port 80 --target-port 80
-kubectl logs web-server
-kubectl delete pod web-server
-kubectl delete all --all
-
-
-
-
-
 
